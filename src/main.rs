@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate yew;
+extern crate hello_rust_yew;
+
 use yew::prelude::*;
+use hello_rust_yew::components::header::Header;
 
 struct Model {
     texts : Vec<String>
@@ -37,11 +40,16 @@ impl Renderable<Model> for Model {
         };
 
         html! {
-            <div>
-                {"hello! yew!"}
-                <button onclick=|_| Msg::AddText,>{"Add Text!"}</button>
-                {for self.texts.iter().map(render)}
-            </div>
+            <>
+                <Header:
+                    text={"yew application header."},
+                />
+                <div>
+                    {"hello! yew!"}
+                    <button onclick=|_| Msg::AddText,>{"Add Text!"}</button>
+                    {for self.texts.iter().map(render)}
+                </div>
+            </>
         }
     }
 }

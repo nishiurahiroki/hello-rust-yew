@@ -1,8 +1,14 @@
+extern crate stdweb;
+
+use stdweb::web::IParentNode;
+use stdweb::web::document;
+
 #[macro_use]
 extern crate yew;
 extern crate hello_rust_yew;
 
 use yew::prelude::*;
+
 use hello_rust_yew::components::header::Header;
 
 struct Model {
@@ -41,10 +47,10 @@ impl Renderable<Model> for Model {
 
         html! {
             <>
-                <Header:
-                    text={"yew application header."},
-                />
                 <div>
+                    <Header:
+                        text={"yew application header."},
+                    />
                     {"hello! yew!"}
                     <button onclick=|_| Msg::AddText,>{"Add Text!"}</button>
                     {for self.texts.iter().map(render)}
@@ -57,6 +63,9 @@ impl Renderable<Model> for Model {
 
 fn main() {
     yew::initialize();
-    App::<Model>::new().mount_to_body();
+
+    let root_element = document().query_selector("#root").unwrap().unwrap();
+    App::<Model>::new().mount(root_element);
+
     yew::run_loop();
 }
